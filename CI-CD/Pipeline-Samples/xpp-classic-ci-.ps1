@@ -22,7 +22,7 @@ try
     $TokenBase64 = [Convert]::ToBase64String($TokenBytes)
     $AuthHeader = @{ Authorization = "Basic " + $TokenBase64 }
 
-    [string]$Pipeline = Get-Content -Raw (Join-Path -Path $PSScriptRoot -ChildPath "classic-ci.json")
+    [string]$Pipeline = Get-Content -Raw (Join-Path -Path $PSScriptRoot -ChildPath "xpp-classic-ci.json")
     $Pipeline = $Pipeline.Replace('{\"mappings\":[]}', '{\"mappings\":[{\"serverPath\":\"$/' + $ProjectName + '/Trunk/' + $Branch + '\",\"mappingType\":\"map\",\"localPath\":\"\\\\\"}]}')
     $Pipeline = $Pipeline.Replace('"name": "X++ Classic Pipeline",','"name": "' + $PipelineName + '",')
 
