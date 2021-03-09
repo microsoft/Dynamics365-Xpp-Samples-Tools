@@ -13,6 +13,17 @@ if (!$PipelineName)
     $PipelineName = "X++ ($Branch)"
 }
 
+$jsonfile ="xpp-classic-ci.json"
+$version = Read-Host "Type 17 for 10.0.17 or earlier, or ENTER for default (18) for 10.0.18 or newer"
+if ($version -eq "17")
+{
+    $jsonfile = "xpp-classic-ci - 10.0.17 or earlier.json"
+}
+elseif ($version -eq "18")
+{
+    $jsonfile ="xpp-classic-ci.json"
+}
+
 $URI = "https://dev.azure.com/$($Organization)/$($Project)/_apis/build/definitions?api-version=5.1"
 
 [int]$ExitCode = 0
@@ -22,7 +33,7 @@ try
     $TokenBase64 = [Convert]::ToBase64String($TokenBytes)
     $AuthHeader = @{ Authorization = "Basic " + $TokenBase64 }
 
-    [string]$Pipeline = Get-Content -Raw (Join-Path -Path $PSScriptRoot -ChildPath "xpp-classic-ci.json")
+    [string]$Pipeline = Get-Content -Raw (Join-Path -Path $PSScriptRoot -ChildPath $jsonfile)
     $Pipeline = $Pipeline.Replace('{\"mappings\":[]}', '{\"mappings\":[{\"serverPath\":\"$/' + $ProjectName + '/Trunk/' + $Branch + '\",\"mappingType\":\"map\",\"localPath\":\"\\\\\"}]}')
     $Pipeline = $Pipeline.Replace('"name": "X++ Classic Pipeline",','"name": "' + $PipelineName + '",')
 

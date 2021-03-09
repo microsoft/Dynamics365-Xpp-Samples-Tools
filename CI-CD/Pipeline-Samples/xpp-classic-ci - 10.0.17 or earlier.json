@@ -7,9 +7,6 @@
         "AppPackage": {
             "value": "Microsoft.Dynamics.AX.Application.DevALM.BuildXpp"
         },
-        "AppSuitePackage": {
-            "value": "Microsoft.Dynamics.AX.ApplicationSuite.DevALM.BuildXpp"
-        },
         "MetadataPath": {
             "value": "$(Build.SourcesDirectory)\\Metadata"
         },
@@ -123,7 +120,7 @@
                         "inputs": {
                             "solution": "**\\*.sln",
                             "vsVersion": "15.0",
-                            "msbuildArgs": "/p:BuildTasksDirectory=\"$(NugetsPath)\\$(ToolsPackage)\\DevAlm\" /p:MetadataDirectory=\"$(MetadataPath)\" /p:FrameworkDirectory=\"$(NuGetsPath)\\$(ToolsPackage)\" /p:ReferenceFolder=\"$(NuGetsPath)\\$(PlatPackage)\\ref\\net40;$(NuGetsPath)\\$(AppPackage)\\ref\\net40;$(NuGetsPath)\\$(AppSuitePackage)\\ref\\net40;$(MetadataPath);$(Build.BinariesDirectory)\" /p:ReferencePath=\"$(NuGetsPath)\\$(ToolsPackage)\" /p:OutputDirectory=\"$(Build.BinariesDirectory)\"",
+                            "msbuildArgs": "/p:BuildTasksDirectory=\"$(NugetsPath)\\$(ToolsPackage)\\DevAlm\" /p:MetadataDirectory=\"$(MetadataPath)\" /p:FrameworkDirectory=\"$(NuGetsPath)\\$(ToolsPackage)\" /p:ReferenceFolder=\"$(NuGetsPath)\\$(PlatPackage)\\ref\\net40;$(NuGetsPath)\\$(AppPackage)\\ref\\net40;$(MetadataPath);$(Build.BinariesDirectory)\" /p:ReferencePath=\"$(NuGetsPath)\\$(ToolsPackage)\" /p:OutputDirectory=\"$(Build.BinariesDirectory)\"",
                             "platform": "",
                             "configuration": "",
                             "clean": "false",
