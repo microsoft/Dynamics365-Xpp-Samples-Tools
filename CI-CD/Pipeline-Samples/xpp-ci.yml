@@ -34,6 +34,7 @@ steps:
     nugetConfigPath: '$(NugetConfigsPath)\nuget.config'
     restoreMode: install
     nuGetRestoreArgs: '-ExcludeVersion -OutputDirectory "$(NugetsPath)"'
+    nuGetVersion: 4.0.0.2283
 
 # Use the custom build number y.m.d.rev as the model version
 # Default updates only VAR layer and above
