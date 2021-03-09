@@ -34,7 +34,6 @@ steps:
     nugetConfigPath: '$(NugetConfigsPath)\nuget.config'
     restoreMode: install
     nuGetRestoreArgs: '-ExcludeVersion -OutputDirectory "$(NugetsPath)"'
-    nuGetVersion: 4.0.0.2283
 
 # Use the custom build number y.m.d.rev as the model version
 # Default updates only VAR layer and above
@@ -43,6 +42,15 @@ steps:
   inputs:
     XppSourcePath: '$(MetadataPath)'
     VersionNumber: '$(Build.BuildNumber)'
+
+# In case the X++ code has check-in binary dependencies, copy them to the output folder
+# This is needed for packaging but also for the X++ compiler
+- task: CopyFiles@2
+  displayName: 'Copy Binary Dependencies to: $(Build.BinariesDirectory)'
+  inputs:
+    SourceFolder: '$(MetadataPath)'
+    Contents: '**/bin/**'
+    TargetFolder: '$(Build.BinariesDirectory)'
 
 # Build using MSBuild 15 (VS 2017)
 # Provide the needed paths, including semi-colon separated list of reference folders

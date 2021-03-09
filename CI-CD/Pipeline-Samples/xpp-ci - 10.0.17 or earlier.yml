@@ -43,6 +43,15 @@ steps:
     XppSourcePath: '$(MetadataPath)'
     VersionNumber: '$(Build.BuildNumber)'
 
+# In case the X++ code has check-in binary dependencies, copy them to the output folder
+# This is needed for packaging but also for the X++ compiler
+- task: CopyFiles@2
+  displayName: 'Copy Binary Dependencies to: $(Build.BinariesDirectory)'
+  inputs:
+    SourceFolder: '$(MetadataPath)'
+    Contents: '**/bin/**'
+    TargetFolder: '$(Build.BinariesDirectory)'
+
 # Build using MSBuild 15 (VS 2017)
 # Provide the needed paths, including semi-colon separated list of reference folders
 # /p:ReferenceFolder are metadata folders containing other (compiled) X++ packages that are referenced
