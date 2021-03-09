@@ -60,7 +60,6 @@
                             "noCache": "false",
                             "nuGetRestoreArgs": "-ExcludeVersion -OutputDirectory \"$(NugetsPath)\"",
                             "verbosity": "Detailed",
-                            "nuGetVersion": "4.0.0.2283",
                             "nuGetPath": ""
                         }
                     },
