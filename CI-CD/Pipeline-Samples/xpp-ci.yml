@@ -50,7 +50,10 @@ steps:
   displayName: 'Copy Binary Dependencies to: $(Build.BinariesDirectory)'
   inputs:
     SourceFolder: '$(MetadataPath)'
-    Contents: '**/bin/**'
+    Contents: |
+      **/bin/**
+      **/Resources/**
+      **/*.xref
     TargetFolder: '$(Build.BinariesDirectory)'
 
 # Build using MSBuild 15 (VS 2017)
