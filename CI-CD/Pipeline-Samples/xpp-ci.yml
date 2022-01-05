@@ -5,11 +5,11 @@
 # Change the name of the build to a 4-digit version number to be used for model versioning
 name: $(Date:yy.MM.dd)$(Rev:.r)
 trigger:
-- master
+- main
 
 pool:
-# Use the VS2017 image
-  vmImage: 'vs2017-win2016'
+# Use the VS2019 image
+  vmImage: 'windows-2019'
   demands:
     - msbuild
     - visualstudio
@@ -44,16 +44,7 @@ steps:
     XppSourcePath: '$(MetadataPath)'
     VersionNumber: '$(Build.BuildNumber)'
 
-# In case the X++ code has check-in binary dependencies, copy them to the output folder
-# This is needed for packaging but also for the X++ compiler
-- task: CopyFiles@2
-  displayName: 'Copy Binary Dependencies to: $(Build.BinariesDirectory)'
-  inputs:
-    SourceFolder: '$(MetadataPath)'
-    Contents: '**/bin/**'
-    TargetFolder: '$(Build.BinariesDirectory)'
-
-# Build using MSBuild 15 (VS 2017)
+# Build using MSBuild 16 (VS 2019)
 # Provide the needed paths, including semi-colon separated list of reference folders
 # /p:ReferenceFolder are metadata folders containing other (compiled) X++ packages that are referenced
 # /p:ReferencePath are folders containing non-X++ assemblies referenced (aside from one already in the output folder for the package)
@@ -61,7 +52,7 @@ steps:
   displayName: 'Build solution **\*.sln'
   inputs:
     solution: '**/*.sln'
-    vsVersion: '15.0'
+    vsVersion: '16.0'
     msbuildArgs: '/p:BuildTasksDirectory="$(NugetsPath)\$(ToolsPackage)\DevAlm" /p:MetadataDirectory="$(MetadataPath)" /p:FrameworkDirectory="$(NuGetsPath)\$(ToolsPackage)" /p:ReferenceFolder="$(NuGetsPath)\$(PlatPackage)\ref\net40;$(NuGetsPath)\$(AppPackage)\ref\net40;$(NuGetsPath)\$(AppSuitePackage)\ref\net40;$(MetadataPath);$(Build.BinariesDirectory)" /p:ReferencePath="$(NuGetsPath)\$(ToolsPackage)" /p:OutputDirectory="$(Build.BinariesDirectory)"'
 
 # Copy the compiler log files to the drop artifacts
