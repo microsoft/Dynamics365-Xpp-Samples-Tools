@@ -73,7 +73,7 @@
                         "timeoutInMinutes": 0,
                         "condition": "succeeded()",
                         "task": {
-                            "id": "2f934f7a-6f72-5a07-be8d-a8dd8c7e8ab9",
+                            "id": "39fb981e-bf08-50cc-a6b1-57bd7d8024fd",
                             "versionSpec": "0.*",
                             "definitionType": "task"
                         },
@@ -162,7 +162,7 @@
                         "timeoutInMinutes": 0,
                         "condition": "succeeded()",
                         "task": {
-                            "id": "7fb16795-60b5-5435-9c70-10ff3740b4f3",
+                            "id": "1f5745a1-76ab-5020-a957-24ef5d920b5f",
                             "versionSpec": "0.*",
                             "definitionType": "task"
                         },
@@ -183,7 +183,7 @@
                         "timeoutInMinutes": 0,
                         "condition": "succeeded()",
                         "task": {
-                            "id": "d5d98cc7-805d-5533-b5c3-9aaaf3910be9",
+                            "id": "755d34e6-3fb2-59a9-9098-8f75a75dcfba",
                             "versionSpec": "0.*",
                             "definitionType": "task"
                         },
