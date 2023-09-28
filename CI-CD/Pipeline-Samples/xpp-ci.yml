@@ -27,14 +27,11 @@ variables:
 
 steps:
 # Install NuGet and use -ExcludeVersion option to avoid paths containing version numbers
-- task: NuGetInstaller@0
-  displayName: 'NuGet install Packages'
+- task: NuGetCommand@2
+  displayName: 'NuGet custom install Packages'
   inputs:
-    solution: '$(NugetConfigsPath)\packages.config'
-    nugetConfigPath: '$(NugetConfigsPath)\nuget.config'
-    restoreMode: install
-    nuGetRestoreArgs: '-ExcludeVersion -OutputDirectory "$(NugetsPath)"'
-    nuGetVersion: 4.0.0.2283
+    command: custom
+    arguments: 'install -Noninteractive $(NugetConfigsPath)\packages.config -ConfigFile $(NugetConfigsPath)\nuget.config -Verbosity Detailed -ExcludeVersion -OutputDirectory "$(NugetsPath)"'
 
 # Use the custom build number y.m.d.rev as the model version
 # Default updates only VAR layer and above
