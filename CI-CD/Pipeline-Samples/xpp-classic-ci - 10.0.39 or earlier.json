@@ -1,0 +1,256 @@
+{
+    "options": [
+    ],
+    "demands":  [
+    ],
+    "variables": {
+        "AppPackage": {
+            "value": "Microsoft.Dynamics.AX.Application.DevALM.BuildXpp"
+        },
+        "AppSuitePackage": {
+            "value": "Microsoft.Dynamics.AX.ApplicationSuite.DevALM.BuildXpp"
+        },
+        "MetadataPath": {
+            "value": "$(Build.SourcesDirectory)\\Metadata"
+        },
+        "NugetConfigsPath": {
+            "value": "$(Build.SourcesDirectory)\\Metadata"
+        },
+        "NugetsPath": {
+            "value": "$(Pipeline.Workspace)\\NuGets"
+        },
+        "PlatPackage": {
+            "value": "Microsoft.Dynamics.AX.Platform.DevALM.BuildXpp"
+        },
+        "system.debug": {
+            "value": "false",
+            "allowOverride": true
+        },
+        "ToolsPackage": {
+            "value": "Microsoft.Dynamics.AX.Platform.CompilerPackage"
+        }
+    },
+    "properties": {},
+    "tags": [],
+    "buildNumberFormat": "$(Date:yy.MM.dd)$(Rev:.r)",
+    "jobAuthorizationScope": "project",
+    "jobTimeoutInMinutes": 60,
+    "jobCancelTimeoutInMinutes": 5,
+    "process": {
+        "phases": [
+            {
+                "steps": [
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "NuGet custom install Packages",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeeded()",
+                        "task": {
+                            "id": "333b11bd-d341-40d9-afcf-b32d5ce6f23b",
+                            "versionSpec": "2.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "command": "custom",
+                            "arguments": "install -Noninteractive $(NugetConfigsPath)\\packages.config -ConfigFile $(NugetConfigsPath)\\nuget.config -Verbosity Detailed -ExcludeVersion -OutputDirectory \"$(NugetsPath)\""
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Update Model Version",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeeded()",
+                        "task": {
+                            "id": "39fb981e-bf08-50cc-a6b1-57bd7d8024fd",
+                            "versionSpec": "0.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "XppSourcePath": "$(MetadataPath)",
+                            "XppDescriptorSearch": "**\\Descriptor\\*.xml",
+                            "XppLayer": "10",
+                            "VersionNumber": "$(Build.BuildNumber)"
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Build solution **\\*.sln",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeeded()",
+                        "task": {
+                            "id": "71a9a2d3-a98a-4caa-96ab-affca411ecda",
+                            "versionSpec": "1.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "solution": "**\\*.sln",
+                            "vsVersion": "16.0",
+                            "msbuildArgs": "/p:BuildTasksDirectory=\"$(NugetsPath)\\$(ToolsPackage)\\DevAlm\" /p:MetadataDirectory=\"$(MetadataPath)\" /p:FrameworkDirectory=\"$(NuGetsPath)\\$(ToolsPackage)\" /p:ReferenceFolder=\"$(NuGetsPath)\\$(PlatPackage)\\ref\\net40;$(NuGetsPath)\\$(AppPackage)\\ref\\net40;$(NuGetsPath)\\$(AppSuitePackage)\\ref\\net40;$(MetadataPath);$(Build.BinariesDirectory)\" /p:ReferencePath=\"$(NuGetsPath)\\$(ToolsPackage)\" /p:OutputDirectory=\"$(Build.BinariesDirectory)\"",
+                            "platform": "",
+                            "configuration": "",
+                            "clean": "false",
+                            "maximumCpuCount": "false",
+                            "restoreNugetPackages": "false",
+                            "msbuildArchitecture": "x86",
+                            "logProjectEvents": "true",
+                            "createLogFile": "false",
+                            "logFileVerbosity": "normal"
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": true,
+                        "displayName": "Copy X++ Compile Log Files to: $(Build.ArtifactStagingDirectory)\\Logs",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeededOrFailed()",
+                        "task": {
+                            "id": "5bfb729a-a7c8-4a78-a7c3-8d717bb7c13c",
+                            "versionSpec": "2.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "SourceFolder": "$(Build.SourcesDirectory)",
+                            "Contents": "**\\Dynamics.AX.*.xppc.*\n**\\Dynamics.AX.*.labelc.*\n**\\Dynamics.AX.*.reportsc.*",
+                            "TargetFolder": "$(Build.ArtifactStagingDirectory)\\Logs",
+                            "CleanTargetFolder": "false",
+                            "OverWrite": "false",
+                            "flattenFolders": "false",
+                            "preserveTimestamp": "false"
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Use NuGet 3.3.0",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeeded()",
+                        "task": {
+                            "id": "2c65196a-54fd-4a02-9be8-d9d1837b7c5d",
+                            "versionSpec": "0.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "versionSpec": "3.3.0",
+                            "checkLatest": "false"
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Create Deployable Package",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeeded()",
+                        "task": {
+                            "id": "1f5745a1-76ab-5020-a957-24ef5d920b5f",
+                            "versionSpec": "0.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "XppToolsPath": "$(NuGetsPath)\\$(ToolsPackage)",
+                            "XppBinariesPath": "$(Build.BinariesDirectory)",
+                            "XppBinariesSearch": "*",
+                            "DeployablePackagePath": "$(Build.ArtifactStagingDirectory)\\AXDeployableRuntime_$(Build.BuildNumber).zip",
+                            "DeploymentFolder": ""
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": false,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Add Licenses to Deployable Package",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeeded()",
+                        "task": {
+                            "id": "755d34e6-3fb2-59a9-9098-8f75a75dcfba",
+                            "versionSpec": "0.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "LicenseFilePaths": "*.txt",
+                            "DeployablePackagePath": "$(Build.ArtifactStagingDirectory)\\AXDeployableRuntime_$(Build.BuildNumber).zip"
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": true,
+                        "displayName": "Publish Artifact: drop",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeededOrFailed()",
+                        "task": {
+                            "id": "2ff763a7-ce83-4e1f-bc89-0ae63477cebe",
+                            "versionSpec": "1.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "PathtoPublish": "$(build.artifactstagingdirectory)",
+                            "ArtifactName": "drop",
+                            "ArtifactType": "Container",
+                            "TargetPath": "\\\\my\\share\\$(Build.DefinitionName)\\$(Build.BuildNumber)",
+                            "Parallel": "false",
+                            "ParallelCount": "8",
+                            "FileCopyOptions": ""
+                        }
+                    }
+                ],
+                "name": "Compile X++",
+                "refName": "XppCompileJob",
+                "condition": "succeeded()",
+                "target": {
+                    "executionOptions": {
+                        "type": 0
+                    },
+                    "allowScriptsAuthAccessOption": false,
+                    "type": 1
+                },
+                "jobAuthorizationScope": 1
+            }
+        ],
+        "target": {
+            "agentSpecification": {
+                "identifier": "windows-2019"
+            }
+        },
+        "type": 1
+    },
+    "processParameters": {
+    },
+    "repository": {
+        "properties": {
+            "labelSourcesFormat": "$(Build.BuildNumber)",
+            "tfvcMapping":  "{\"mappings\":[]}",
+            "cleanOptions":  "1"
+        },
+        "id": "$/",
+        "type": "TfsVersionControl",
+        "clean": "true",
+        "checkoutSubmodules": false
+    },
+    "quality": "definition",
+    "name": "X++ Classic Pipeline",
+    "type": "build",
+    "queue":  {
+        "name":  "Azure Pipelines",
+        "pool":  {
+            "name":  "Azure Pipelines",
+            "isHosted": true
+        }
+    }
+}

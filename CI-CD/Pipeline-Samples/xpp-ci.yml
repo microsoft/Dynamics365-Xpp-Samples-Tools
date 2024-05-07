@@ -17,7 +17,8 @@ pool:
 # Declare some shorthand for NuGet package names
 # Make editing the path for metadata and NuGet extraction folder easier
 variables:
-  AppPackage: 'Microsoft.Dynamics.AX.Application.DevALM.BuildXpp'
+  App1Package: 'Microsoft.Dynamics.AX.Application1.DevALM.BuildXpp'
+  App2Package: 'Microsoft.Dynamics.AX.Application2.DevALM.BuildXpp'
   AppSuitePackage: 'Microsoft.Dynamics.AX.ApplicationSuite.DevALM.BuildXpp'
   PlatPackage: 'Microsoft.Dynamics.AX.Platform.DevALM.BuildXpp'
   ToolsPackage: 'Microsoft.Dynamics.AX.Platform.CompilerPackage'
@@ -50,7 +51,7 @@ steps:
   inputs:
     solution: '**/*.sln'
     vsVersion: '16.0'
-    msbuildArgs: '/p:BuildTasksDirectory="$(NugetsPath)\$(ToolsPackage)\DevAlm" /p:MetadataDirectory="$(MetadataPath)" /p:FrameworkDirectory="$(NuGetsPath)\$(ToolsPackage)" /p:ReferenceFolder="$(NuGetsPath)\$(PlatPackage)\ref\net40;$(NuGetsPath)\$(AppPackage)\ref\net40;$(NuGetsPath)\$(AppSuitePackage)\ref\net40;$(MetadataPath);$(Build.BinariesDirectory)" /p:ReferencePath="$(NuGetsPath)\$(ToolsPackage)" /p:OutputDirectory="$(Build.BinariesDirectory)"'
+    msbuildArgs: '/p:BuildTasksDirectory="$(NugetsPath)\$(ToolsPackage)\DevAlm" /p:MetadataDirectory="$(MetadataPath)" /p:FrameworkDirectory="$(NuGetsPath)\$(ToolsPackage)" /p:ReferenceFolder="$(NuGetsPath)\$(PlatPackage)\ref\net40;$(NuGetsPath)\$(App1Package)\ref\net40;$(NuGetsPath)\$(App2Package)\ref\net40;$(NuGetsPath)\$(AppSuitePackage)\ref\net40;$(MetadataPath);$(Build.BinariesDirectory)" /p:ReferencePath="$(NuGetsPath)\$(ToolsPackage)" /p:OutputDirectory="$(Build.BinariesDirectory)"'
 
 # Copy the compiler log files to the drop artifacts
 - task: CopyFiles@2

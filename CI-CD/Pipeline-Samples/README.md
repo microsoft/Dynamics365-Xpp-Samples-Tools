@@ -23,10 +23,12 @@ To run X++ build automation on any system outside of X++ development machines (i
 
 | File/folder       | Description                                |
 |---                |---                                         |
-| `xpp-ci.yml`      | A sample YML file for an X++ Git repo for version 10.0.18 or newer. |
+| `xpp-ci.yml`      | A sample YML file for an X++ Git repo for version 10.0.40 or newer. |
 | `xpp-ci - 10.0.17 or earlier.yml`      | A sample YML file for an X++ Git repo for version 10.0.17 or earlier. |
-| `xpp-classic-ci.json` | Classic pipeline definition to import manually for version 10.0.18 or newer. |
+| `xpp-ci - 10.0.39 or earlier.yml`      | A sample YML file for an X++ Git repo for version 10.0.39 or earlier. |
+| `xpp-classic-ci.json` | Classic pipeline definition to import manually for version 10.0.40 or newer. |
 | `xpp-classic-ci - 10.0.17 or earlier.json` | Classic pipeline definition to import manually for version 10.0.17 or earlier. |
+| `xpp-classic-ci - 10.0.39 or earlier.json` | Classic pipeline definition to import manually for version 10.0.39 or earlier. |
 | `xpp-classic-ci.ps1`  | PowerShell script to automatically create a classic pipeline definition in your project. |
 
 ## Prerequisites
