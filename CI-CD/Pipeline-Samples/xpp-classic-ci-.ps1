@@ -14,12 +14,16 @@ if (!$PipelineName)
 }
 
 $jsonfile ="xpp-classic-ci.json"
-$version = Read-Host "Type 17 for 10.0.17 or earlier, or ENTER for default (18) for 10.0.18 or newer"
+$version = Read-Host "Type 17 for 10.0.17 or earlier, or Type 39 for 10.0.39 or earlier, or ENTER for default (40) for 10.0.40 or newer"
 if ($version -eq "17")
 {
     $jsonfile = "xpp-classic-ci - 10.0.17 or earlier.json"
 }
-elseif ($version -eq "18")
+elseif ($version -eq "39")
+{
+    $jsonfile = "xpp-classic-ci - 10.0.39 or earlier.json"
+}
+elseif ($version -eq "40")
 {
     $jsonfile ="xpp-classic-ci.json"
 }
