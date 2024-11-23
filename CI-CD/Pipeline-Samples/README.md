@@ -45,6 +45,24 @@ Finally, these samples depend on tasks from the [Dynamics 365 Finance and Operat
 - To setup the classic definition which can work with TFVC (Team Foundation Version Control) as well as Git repositories, import the **xpp-classic-ci.json** file from the pipelines landing page. (See: [Export and Import a Pipeline](https://docs.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=java%2Cclassic%2Cbrowser%2Ctfs-2018-2#export-and-import-a-pipeline)). 
 - Alternatively you can run the **xpp-classic-ci.ps1** PowerShell script, provide [connection credentials including a PAT token](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page#create-personal-access-tokens-to-authenticate-access), and follow the script's prompts to create a new pipeline definition in your project. The token requires at least **Build: Read & execute** permissions, as well as **Agent Pools: Read**.
 
+## Classic Pipeline Variable Definitions
+
+| Variable | Default Value | Description |
+| ---	   | ---	   | ---	 |
+| `AppPackage`	| Microsoft.Dynamics.AX.Application.DevALM.BuildXpp	| Reference to the Application nuget package name	|
+| `AppSuitePackage`	| Microsoft.Dynamics.AX.ApplicationSuite.DevALM.BuildXpp	| Reference to the Applicaiton Suite nuget package name	|
+| `PlatPackage`	| Microsoft.Dynamics.AX.Platform.DevALM.BuildXpp	| Reference to the Platform nuget package name	|
+| `ToolsPackage`	| Microsoft.Dynamics.AX.Platform.CompilerPackage	| Reference to the compiler nuget package	|
+| `system.collectionId` | <> | The GUID of the TFS collection or Azure DevOps organization |
+| `system.debug` | false | Allows for the collection of more detailed logs |
+| `system.definitionId` | <> | Will be auto filled with the pipeline ID when the pipeline is initially saved |
+| `system.teamProject` | 'your project ID' | This will populate with your DevOps project ID |
+| `NugetsPath` | $(Pipeline.Workspace)\NuGets | This is a default value used during build to find the deployed nuget packages location |
+| `MetadataPath*` | $(Build.SourcesDirectory)\Metadata | Your source directory for the pipeline should be set to \Trunk\Main and this variable will point to the Metadata folder containing the checked in models |
+| `NugetsConfigPath*` |  $(Build.SourcesDirectory)\Metadata | This will point to the folder containing your nuget.config and packages.config files uploaded as part of the artifact upload, by default it points to the Metadata directory under your source directory |
+
+`*`: These variable are the only ones which may need to modify to fit your specific repository setup. For additional information regarding system defined variable please see visit [Azure DevOps: Use predefined variables](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml)
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
