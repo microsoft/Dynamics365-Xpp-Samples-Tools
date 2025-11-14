@@ -10,9 +10,6 @@ trigger:
 pool:
 # Use the VS2019 image
   vmImage: 'windows-2019'
-  demands:
-    - msbuild
-    - visualstudio
   
 # Declare some shorthand for NuGet package names
 # Make editing the path for metadata and NuGet extraction folder easier
@@ -86,4 +83,5 @@ steps:
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
   condition: succeededOrFailed()
+
 
